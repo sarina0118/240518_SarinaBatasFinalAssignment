@@ -1,0 +1,23 @@
+User logged in successfully.
+Failed login attempt.
+Created file: test2.txt
+User logged in successfully.
+Created file: test.txt
+User logged in successfully.
+Changed permissions of test.txt to 644
+User logged in successfully.
+Created file: secret.txt
+Wrote to file: Operating
+Read file: secret.txt
+Read file: test.txt
+User logged in successfully.
+Read file: secret.txt
+Encrypted file: secret.txt
+Decrypted file: secret.txt
+Read file: secret.txt
+User logged in successfully.
+Wrote to file: test1.txt
+Read file: test1.txt
+Encrypted file: test1.txt
+Decrypted file: test1.txt
+Read file: test1.txt
