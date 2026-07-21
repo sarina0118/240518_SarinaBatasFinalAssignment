@@ -5,17 +5,45 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 #define PORT 8080
+#define USERNAME "sarina"
+#define PASSWORD "janakjanuka@29"
 void *handleClient(void *socketDesc)
 {
     int clientSocket = *(int *)socketDesc;
     free(socketDesc);
-    char buffer[1024] = {0};
-    recv(clientSocket, buffer, sizeof(buffer), 0);
-    printf("Client says: %s\n", buffer);
-    char reply[] = "Message received by server.";
+
+    char username[50];
+    char password[50];
+    char message[1024];
+
+    recv(clientSocket, username, sizeof(username), 0);
+    recv(clientSocket, password, sizeof(password), 0);
+
+    if (strcmp(username, USERNAME) != 0 ||
+        strcmp(password, PASSWORD) != 0)
+    {
+        char reply[] = "Authentication Failed!";
+        send(clientSocket, reply, strlen(reply), 0);
+
+        printf("Client authentication failed.\n");
+
+        close(clientSocket);
+        return NULL;
+    }
+
+    recv(clientSocket, message, sizeof(message), 0);
+
+    printf("\nAuthenticated Client\n");
+    printf("Message: %s\n", message);
+
+    char reply[] = "Authentication Successful. Message Received.";
+
     send(clientSocket, reply, strlen(reply), 0);
+
     close(clientSocket);
+
     printf("Client disconnected.\n");
+
     return NULL;
 }
 int main()
