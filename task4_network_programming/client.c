@@ -46,6 +46,13 @@ int main()
     // Enter Message
     printf("Enter message: ");
     fgets(message, sizeof(message), stdin);
+    // Validate message
+    if (strlen(message) <= 1)
+{
+    printf("Message cannot be empty.\n");
+    close(clientSocket);
+    return 1;
+}
     // Send username
     send(clientSocket, username, sizeof(username), 0);
     // Send password

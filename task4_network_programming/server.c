@@ -11,28 +11,29 @@ void *handleClient(void *socketDesc)
 {
     int clientSocket = *(int *)socketDesc;
     free(socketDesc);
-
     char username[50];
     char password[50];
     char message[1024];
-
     recv(clientSocket, username, sizeof(username), 0);
     recv(clientSocket, password, sizeof(password), 0);
-
     if (strcmp(username, USERNAME) != 0 ||
         strcmp(password, PASSWORD) != 0)
     {
         char reply[] = "Authentication Failed!";
         send(clientSocket, reply, strlen(reply), 0);
-
         printf("Client authentication failed.\n");
-
         close(clientSocket);
         return NULL;
     }
-
     recv(clientSocket, message, sizeof(message), 0);
-
+    if (strlen(message) <= 1)
+{
+    char reply[] = "Invalid message.";
+    send(clientSocket, reply, strlen(reply), 0);
+    printf("Client sent an empty message.\n");
+    close(clientSocket);
+    return NULL;
+}
     printf("\nAuthenticated Client\n");
     printf("Message: %s\n", message);
 
